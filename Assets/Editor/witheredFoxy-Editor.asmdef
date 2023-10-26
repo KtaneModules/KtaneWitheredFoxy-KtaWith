@@ -1,0 +1,10 @@
+{
+  "name": "witheredFoxy-Editor",
+  "references": [
+    "witheredFoxy"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
