@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class WitheredFoxy : MonoBehaviour {
@@ -78,4 +80,27 @@ public class WitheredFoxy : MonoBehaviour {
 		}
 		lightOn = !lightOn;
 	}
+
+    // Twitch Plays
+#pragma warning disable 414
+    private static readonly string TwitchHelpMessage = @"!{0} flash [Hello! Hello! Do !# flash to flash Withered Foxy]";
+#pragma warning restore 414
+
+    protected IEnumerator ProcessTwitchCommand(string command)
+    {
+        Match match = Regex.Match(command, @"^\s*flash\s+(.+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+        if (match.Success && !moduleSolved)
+        {
+			for (int i = 0; i < 20; i++)
+			{
+                yield return null;
+                Flash();
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+			yield break;
+        }
+		yield return "sendtochaterror The flashlight battery died, there’s nothing in the hallway.";
+        yield break;
+    }
 }
