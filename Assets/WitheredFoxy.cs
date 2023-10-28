@@ -74,6 +74,7 @@ public class WitheredFoxy : MonoBehaviour {
 			if (flashes > 19 && foxyOn) {
 				Reset();
 				needy.HandlePass();
+				audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Strike, transform);
 			}
 			screen.sharedMaterial = m_foxy[2];
 			if (foxyOn) screen.sharedMaterial = m_foxy[0];
