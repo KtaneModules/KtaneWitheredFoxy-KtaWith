@@ -1,7 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class WitheredFoxy : MonoBehaviour {
@@ -15,9 +12,9 @@ public class WitheredFoxy : MonoBehaviour {
 	
 	private KeyCode[] ControlKeys = {KeyCode.LeftControl, KeyCode.RightControl};
 
-	static int moduleIdCounter = 1;
-	int moduleId;
-	private bool moduleSolved;
+	private static int moduleIdCounter = 1;
+	private int moduleId;
+	private bool moduleSolved = true;
 	
 	private int flashes = 0;
 	private bool lightOn = false;
@@ -25,19 +22,15 @@ public class WitheredFoxy : MonoBehaviour {
 	
 	private KMAudio.KMAudioRef ambref;
 
-	void Awake () {
+	private void Awake () {
 		moduleId = moduleIdCounter++;
 		needy.OnNeedyActivation += OnNeedyActivation;
 		needy.OnTimerExpired += OnTimerExpired;
 		
 		needy.OnActivate += delegate { audio.PlaySoundAtTransform("Start", transform); };
 	}
-	
-	void Start () {
-		moduleSolved = true;
-	}
 
-	void OnNeedyActivation () {
+	private void OnNeedyActivation () {
 		moduleSolved = false;
 		flashes = 0;
 		foxyOn = true;
@@ -45,29 +38,26 @@ public class WitheredFoxy : MonoBehaviour {
 		ambref = audio.PlaySoundAtTransformWithRef("Ambience", transform);
 	}
 
-	void OnTimerExpired () {
+	private void OnTimerExpired () {
 		Reset();
 		audio.PlaySoundAtTransform("Jumpscare", transform);
 		needy.HandleStrike();
 		Flash();
 	}
 	
-	void Reset() {
+	private void Reset() {
 		ambref.StopSound();
 		flashes = 0;
 		foxyOn = false;
 		moduleSolved = true;
 	}
 	
-	void Update () {
-		for (int i = 0; i < 1; i++) {
-                if (Input.GetKeyDown(ControlKeys[i])) {
-                    Flash();
-                }
-            }
+	private void Update () {
+        if (Input.GetKeyDown(ControlKeys[0]))
+            Flash();
 	}
 	
-	void Flash () {
+	private void Flash () {
 		screen.sharedMaterial = m_foxy[1];
 		if (!lightOn) {
 			flashes++;
