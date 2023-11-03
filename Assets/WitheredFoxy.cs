@@ -2,75 +2,75 @@
 using UnityEngine;
 
 public class WitheredFoxy : MonoBehaviour {
-	   
-	public KMNeedyModule needy;
-	public KMBombInfo bomb;
-	public KMAudio audio;
-	
-	public Material[] m_foxy;
-	public MeshRenderer screen;
-	
-	private KeyCode[] ControlKeys = {KeyCode.LeftControl, KeyCode.RightControl};
+       
+    public KMNeedyModule needy;
+    public KMBombInfo bomb;
+    public KMAudio audio;
+    
+    public Material[] m_foxy;
+    public MeshRenderer screen;
+    
+    private KeyCode[] ControlKeys = {KeyCode.LeftControl, KeyCode.RightControl};
 
-	private static int moduleIdCounter = 1;
-	private int moduleId;
-	private bool moduleSolved = true;
-	
-	private int flashes = 0;
-	private bool lightOn = false;
-	private bool foxyOn = false;
-	
-	private KMAudio.KMAudioRef ambref;
+    private static int moduleIdCounter = 1;
+    private int moduleId;
+    private bool moduleSolved = true;
+    
+    private int flashes = 0;
+    private bool lightOn = false;
+    private bool foxyOn = false;
+    
+    private KMAudio.KMAudioRef ambref;
 
-	private void Awake () {
-		moduleId = moduleIdCounter++;
-		needy.OnNeedyActivation += OnNeedyActivation;
-		needy.OnTimerExpired += OnTimerExpired;
-		
-		needy.OnActivate += delegate { audio.PlaySoundAtTransform("Start", transform); };
-	}
+    private void Awake () {
+        moduleId = moduleIdCounter++;
+        needy.OnNeedyActivation += OnNeedyActivation;
+        needy.OnTimerExpired += OnTimerExpired;
+        
+        needy.OnActivate += delegate { audio.PlaySoundAtTransform("Start", transform); };
+    }
 
-	private void OnNeedyActivation () {
-		moduleSolved = false;
-		flashes = 0;
-		foxyOn = true;
-		
-		ambref = audio.PlaySoundAtTransformWithRef("Ambience", transform);
-	}
+    private void OnNeedyActivation () {
+        moduleSolved = false;
+        flashes = 0;
+        foxyOn = true;
+        
+        ambref = audio.PlaySoundAtTransformWithRef("Ambience", transform);
+    }
 
-	private void OnTimerExpired () {
-		Reset();
-		audio.PlaySoundAtTransform("Jumpscare", transform);
-		needy.HandleStrike();
-		Flash();
-	}
-	
-	private void Reset() {
-		ambref.StopSound();
-		flashes = 0;
-		foxyOn = false;
-		moduleSolved = true;
-	}
-	
-	private void Update () {
+    private void OnTimerExpired () {
+        Reset();
+        audio.PlaySoundAtTransform("Jumpscare", transform);
+        needy.HandleStrike();
+        Flash();
+    }
+    
+    private void Reset() {
+        ambref.StopSound();
+        flashes = 0;
+        foxyOn = false;
+        moduleSolved = true;
+    }
+    
+    private void Update () {
         if (Input.GetKeyDown(ControlKeys[0]))
             Flash();
-	}
-	
-	private void Flash () {
-		screen.sharedMaterial = m_foxy[1];
-		if (!lightOn) {
-			flashes++;
-			if (flashes > 19 && foxyOn) {
-				Reset();
-				needy.HandlePass();
-				audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Strike, transform);
-			}
-			screen.sharedMaterial = m_foxy[2];
-			if (foxyOn) screen.sharedMaterial = m_foxy[0];
-		}
-		lightOn = !lightOn;
-	}
+    }
+    
+    private void Flash () {
+        screen.sharedMaterial = m_foxy[1];
+        if (!lightOn) {
+            flashes++;
+            if (flashes > 19 && foxyOn) {
+                Reset();
+                needy.HandlePass();
+                audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.Strike, transform);
+            }
+            screen.sharedMaterial = m_foxy[2];
+            if (foxyOn) screen.sharedMaterial = m_foxy[0];
+        }
+        lightOn = !lightOn;
+    }
 
     // Twitch Plays
 #pragma warning disable 414
