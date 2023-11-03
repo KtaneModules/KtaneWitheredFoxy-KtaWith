@@ -87,21 +87,13 @@ public class WitheredFoxy : MonoBehaviour {
     private static readonly string TwitchHelpMessage = @"!{0} flash [Hello! Hello! Do !# flash to flash Withered Foxy]";
 #pragma warning restore 414
 
-    protected IEnumerator ProcessTwitchCommand(string command)
-    {
-        Match match = Regex.Match(command, @"^\s*flash\s+(.+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
-        if (match.Success && !moduleSolved)
-        {
-			for (int i = 0; i < 20; i++)
-			{
-                yield return null;
-                Flash();
-                yield return new WaitForSecondsRealtime(0.1f);
-            }
-			yield break;
+    private IEnumerator ProcessTwitchCommand(string command) {
+        if (command.Trim().ToUpperInvariant() != "FLASH")
+            yield return "sendtochaterror The flashlight battery died, there’s nothing in the hallway.";
+        yield return null;
+        for (int i = 0; i < 40; i++) {
+            Flash();
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-		yield return "sendtochaterror The flashlight battery died, there’s nothing in the hallway.";
-        yield break;
     }
 }
