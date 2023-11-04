@@ -534,7 +534,7 @@ MonoBehaviour:
   CountdownTime: 50
   ResetDelayMin: 15
   ResetDelayMax: 50
-  ModuleType: wittheredFoxy
+  ModuleType: witheredFoxy
   ModuleDisplayName: Withered Foxy
   RequiresTimerVisibility: 0
   WarnAtFiveSeconds: 0

@@ -14,7 +14,9 @@ MonoBehaviour:
   id: witheredFoxy
   title: Withered Foxy
   author: Dragoon
-  description: It's foxy but withered.
-  version: 
+  description: "\u201CThis needy could\u2019ve gotten Scott Cawthon on us\u2026\u201D\n\nmodId:
+    witheredFoxy\nIdea, manual, and most of the stuff done and asked by Cyanix\nFoxy
+    and FNAF by Scott Cawthon "
+  version: 1.001
   outputFolder: build
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 2800000, guid: e23bf555fd6466e45bdfdd5a96a43163, type: 3}
